@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'MyHomePage.dart';
 
 const Color cbeGreen = Color(0xFF006B3F);
 const Color cbeGold = Color(0xFFFFD700);
@@ -32,11 +33,11 @@ class _MyHomeState extends State<MyHome> {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        margin: const EdgeInsets.all(8),
-        width: 70,
-        height: 70,
+        margin: const EdgeInsets.all(4),
+        width: 82,
+        height: 44,
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: cbeGreen, width: 1.5),
           color: cbeGreen.withOpacity(0.08),
         ),
@@ -45,8 +46,8 @@ class _MyHomeState extends State<MyHome> {
               ? Icon(icon, color: cbeGreen)
               : Text(
                   label,
-                  style: const TextStyle(
-                    fontSize: 22,
+                  style: TextStyle(
+                    fontSize: label.length > 1 ? 14 : 20,
                     fontWeight: FontWeight.bold,
                     color: cbeGreen,
                   ),
@@ -58,19 +59,23 @@ class _MyHomeState extends State<MyHome> {
 
   Widget _buildKeypad() {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [_buildKey("1"), _buildKey("2"), _buildKey("3")],
         ),
+        const SizedBox(height: 2),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [_buildKey("4"), _buildKey("5"), _buildKey("6")],
         ),
+        const SizedBox(height: 2),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [_buildKey("7"), _buildKey("8"), _buildKey("9")],
         ),
+        const SizedBox(height: 2),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -166,7 +171,11 @@ class _MyHomeState extends State<MyHome> {
                     "Continue",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const MyHomePage()),
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 32),
