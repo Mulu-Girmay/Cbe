@@ -127,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       const SizedBox(height: 12),
                       const Center(
                         child: Text(
-                          "Mulu Girmay Gebru",
+                          "Nardos Haile Wubeneh",
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
