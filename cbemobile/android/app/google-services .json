@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "610995483197",
+    "project_id": "cbebanking-clone",
+    "storage_bucket": "cbebanking-clone.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610995483197:android:3913164b99be86a4e37054",
+        "android_client_info": {
+          "package_name": "com.example.cbe_mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmKs_a8vFCwywg8xSTNIGat9OeIoQ0AkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
