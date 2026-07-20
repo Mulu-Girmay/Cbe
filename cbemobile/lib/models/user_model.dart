@@ -1,4 +1,6 @@
+// lib/models/user_model.dart
 class User {
+  // Not UserModel - keep it as User
   final String id;
   final String firebaseUid;
   final String fullName;
@@ -35,8 +37,12 @@ class User {
       phoneNumber: json['phone_number'],
       email: json['email'],
       profileImage: json['profile_image'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'])
+          : DateTime.now(),
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : DateTime.now(),
       accountId: json['account_id'],
       accountNumber: json['account_number'],
       balance: json['balance'] != null

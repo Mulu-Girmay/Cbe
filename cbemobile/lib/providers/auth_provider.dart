@@ -1,22 +1,22 @@
-// lib/providers/auth_provider.dart
+import 'package:cbe_mobile_app/services/auth_services.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cbe_mobile_app/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cbe_mobile_app/services/api_service.dart';
-import 'package:cbe_mobile_app/models/user_model.dart';
+import 'package:cbe_mobile_app/models/user_model.dart'; // Your User model
 
 class AuthProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
   final ApiService _apiService = ApiService();
 
-  User? _firebaseUser;
-  UserModel? _userModel;
+  firebase_auth.User? _firebaseUser; // ← Use firebase_auth.User
+  User? _userModel; // ← Your User model (no prefix needed)
   bool _isLoading = false;
   bool _isAuthenticated = false;
   String? _error;
 
-  User? get firebaseUser => _firebaseUser;
-  UserModel? get userModel => _userModel;
+  firebase_auth.User? get firebaseUser =>
+      _firebaseUser; // ← Use firebase_auth.User
+  User? get userModel => _userModel;
   bool get isLoading => _isLoading;
   bool get isAuthenticated => _isAuthenticated;
   String? get error => _error;
@@ -40,7 +40,8 @@ class AuthProvider extends ChangeNotifier {
     try {
       final response = await _apiService.get('/account/profile');
       if (response['success'] == true) {
-        _userModel = UserModel.fromJson(response['data']);
+        _userModel =
+            User.fromJson(response['data']['profile'] ?? response['data']);
         _isAuthenticated = true;
         notifyListeners();
       }
@@ -55,7 +56,6 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       await _authService.signInWithPhone(phoneNumber);
-      // OTP will be verified separately
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -69,13 +69,16 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       final result = await _authService.verifyOTP(smsCode);
-      _firebaseUser = result.user;
+      _firebaseUser = result.user; // ← firebase_auth.User
       _isAuthenticated = true;
 
       // Login to backend
       final response = await _apiService.post('/auth/login', {});
       if (response['success'] == true) {
-        _userModel = UserModel.fromJson(response['data']);
+        final userData = response['data'];
+        if (userData is Map<String, dynamic>) {
+          _userModel = User.fromJson(userData); // ← Your User model
+        }
         return true;
       }
       return false;
@@ -93,13 +96,15 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       final result = await _authService.signInWithEmail(email, password);
-      _firebaseUser = result.user;
+      _firebaseUser = result.user; // ← firebase_auth.User
       _isAuthenticated = true;
 
-      // Login to backend
       final response = await _apiService.post('/auth/login', {});
       if (response['success'] == true) {
-        _userModel = UserModel.fromJson(response['data']);
+        final userData = response['data'];
+        if (userData is Map<String, dynamic>) {
+          _userModel = User.fromJson(userData); // ← Your User model
+        }
         return true;
       }
       return false;
