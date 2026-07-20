@@ -1,4 +1,3 @@
-// lib/services/api_service.dart
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:cbe_mobile_app/services/storage_service.dart';
@@ -6,7 +5,6 @@ import 'package:cbe_mobile_app/services/storage_service.dart';
 class ApiService {
   static const String baseUrl = 'http://localhost:5000/api';
 
-  // Get headers with token
   Future<Map<String, String>> getHeaders() async {
     final token = await StorageService.getSecure('firebase_token');
     return {
@@ -15,7 +13,6 @@ class ApiService {
     };
   }
 
-  // Handle API errors
   dynamic handleResponse(http.Response response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return jsonDecode(response.body);
@@ -39,7 +36,6 @@ class ApiService {
     }
   }
 
-  // POST request
   Future<dynamic> post(String endpoint, dynamic data) async {
     try {
       final response = await http.post(
@@ -53,7 +49,6 @@ class ApiService {
     }
   }
 
-  // PUT request
   Future<dynamic> put(String endpoint, dynamic data) async {
     try {
       final response = await http.put(
@@ -67,7 +62,6 @@ class ApiService {
     }
   }
 
-  // DELETE request
   Future<dynamic> delete(String endpoint) async {
     try {
       final response = await http.delete(

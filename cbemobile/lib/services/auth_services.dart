@@ -1,12 +1,10 @@
 // lib/services/auth_service.dart
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:cbe_mobile_app/services/storage_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Check if user is logged in
   Future<bool> isLoggedIn() async {
     final token = await StorageService.getSecure('firebase_token');
     return token != null && _auth.currentUser != null;
@@ -30,7 +28,6 @@ class AuthService {
     }
   }
 
-  // Sign in with phone number
   Future<void> signInWithPhone(String phoneNumber) async {
     try {
       // Format phone number
